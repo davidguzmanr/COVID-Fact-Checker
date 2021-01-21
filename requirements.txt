@@ -1,0 +1,10 @@
+wordcloud==1.8.0
+folium==0.11.0
+tweepy==3.8.0
+nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
+emoji==0.6.0
+autocorrect==2.2.2
+google-trans-new==1.1.9
+imbalanced-learn==0.7.0
+joblib @ file:///tmp/build/80754af9/joblib_1601912903842/work
+tqdm @ file:///tmp/build/80754af9/tqdm_1602185206534/work
