@@ -1,5 +1,5 @@
 # COVID-fact-checker
-Final project for my Data Mining class
+Final project for my Data Mining class.
 
 First install the necessary libraries.
 
