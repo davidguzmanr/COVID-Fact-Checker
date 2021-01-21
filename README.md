@@ -4,7 +4,7 @@ Final project for my Data Mining class
 First install the necessary libraries.
 
 ```
-pip install requirement.txt
+pip install requirements.txt
 ```
 
 To run the app
