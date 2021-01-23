@@ -5,6 +5,7 @@ nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
 emoji==0.6.0
 autocorrect==2.2.2
 google-trans-new==1.1.9
+gdown==3.12.2
 imbalanced-learn==0.7.0
 joblib @ file:///tmp/build/80754af9/joblib_1601912903842/work
 tqdm @ file:///tmp/build/80754af9/tqdm_1602185206534/work

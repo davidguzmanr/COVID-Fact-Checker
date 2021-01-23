@@ -17,6 +17,7 @@ from google_trans_new import google_translator
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from joblib import dump, load 
+import gdown
 import socket
 
 sns.set_style('darkgrid')
@@ -29,13 +30,14 @@ lemmatizer = WordNetLemmatizer()
 stopwords_list = pd.read_csv('Datos/my_stopwords.txt', names=['my_stopwords'])
 stopwords_list = stopwords_list['my_stopwords'].values.tolist()
 spell = Speller(lang='en', fast=True)
-def prepare_text(text):
+
+def prepare_text(text, predict=True):
     # Convert to lowercase
     clean_text = text.lower()
     # Remove foreign characters and emojis
     clean_text = re.sub('[^\u0020-\u024F]', '', clean_text)
     # Remove urls
-    re.sub(r'http\S+', '', text)
+    clean_text = re.sub(r'http\S+', '', clean_text)
     # Remove punctuation, keep @ because TweetTokenizer handles it
     clean_text = re.sub('[!"#$%&\'()*+,-./:;<=>?[\\]^_`{|}~]', '', clean_text)
     # Remove whitespaces
@@ -54,25 +56,15 @@ def prepare_text(text):
     return clean_text
 
 @st.cache(allow_output_mutation=True)
-def load_word_vectorizer(model):
-	# The word_vectorizer.joblib is kinda big for GitHub, so we will train it once, when the app starts
-	train = pd.read_csv('Datos/Inglés/Limpios/train.csv')
-	train['text'] = train['text'].apply(lambda text: prepare_text(text))
-	X_train, y_train = train[['text']], train['label'].values
-
-	word_vectorizer = TfidfVectorizer(
-                sublinear_tf=False,
-                strip_accents='unicode',
-                analyzer='word',
-                ngram_range=(1,5),
-                max_features=10000)
-
-	word_vectorizer.fit(X_train.values.squeeze())
-
-	return word_vectorizer
+def load_word_vectorizer():
+	# The word_vectorizer.joblib is kinda big for GitHub, so we will download it from my Drive
+	url = 'https://drive.google.com/uc?id=1o8pi_BywNIBkgKRCMWRzB0KQeas6vERg&export=download'
+	output = 'word_vectorizer.joblib'
+	gdown.download(url, output, quiet=False)
+	return load('word_vectorizer.joblib')
 
 
-word_vectorizer = load_word_vectorizer('Modelos/word_vectorizer.joblib')
+word_vectorizer = load_word_vectorizer()
 model = load('Modelos/SVM_linear.joblib')
 
 # Formato
